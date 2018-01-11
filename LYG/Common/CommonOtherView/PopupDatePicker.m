@@ -70,11 +70,16 @@ static PopupDatePicker *popupDatePicker = nil;
 }
 
 //从keyWindow中移除PopupDatePick
++ (void)dismissPopupDatePicker {
+    if (popupDatePicker) [popupDatePicker dismiss];
+}
+
+//从keyWindow中移除PopupDatePick
 - (void)dismiss {
     
 #ifdef PopupDatePickerAnimationOn
-    if ([self.delegate respondsToSelector:@selector(popupDatePickerWillDismiss:)]) {
-        [self.delegate popupDatePickerWillDismiss:self];
+    if ([self.delegate respondsToSelector:@selector(popupDatePickerWillDismiss)]) {
+        [self.delegate popupDatePickerWillDismiss];
     }
     
     //dismiss accessoryView和datePickerContainerView的动画
@@ -84,8 +89,8 @@ static PopupDatePicker *popupDatePicker = nil;
         self.accessoryView.frame = CGRectMake(accessoryViewFrame.origin.x, SCREEN_HEIGHT, accessoryViewFrame.size.width, accessoryViewFrame.size.height);
         self.datePickerContainerView.frame = CGRectMake(datePickerContainerViewFrame.origin.x, SCREEN_HEIGHT+accessoryViewFrame.size.height, datePickerContainerViewFrame.size.width, datePickerContainerViewFrame.size.height);
     } completion:^(BOOL finished) {
-        if ([self.delegate respondsToSelector:@selector(popupDatePickerDidDismiss:)]) {
-            [self.delegate popupDatePickerDidDismiss:self];
+        if ([self.delegate respondsToSelector:@selector(popupDatePickerDidDismiss)]) {
+            [self.delegate popupDatePickerDidDismiss];
         }
         self.accessoryView.frame = accessoryViewFrame;
         self.datePickerContainerView.frame = datePickerContainerViewFrame;
@@ -93,8 +98,8 @@ static PopupDatePicker *popupDatePicker = nil;
     }];
     
 #else
-    if ([self.delegate respondsToSelector:@selector(popupDatePickerDidDismiss:)]) {
-        [self.delegate popupDatePickerDidDismiss:self];
+    if ([self.delegate respondsToSelector:@selector(popupDatePickerDidDismiss)]) {
+        [self.delegate popupDatePickerDidDismiss];
     }
     [self removeFromSuperview];
 #endif
@@ -113,14 +118,14 @@ static PopupDatePicker *popupDatePicker = nil;
 
 //“确认”按钮点击
 - (IBAction)confirmButtonClicked:(UIButton *)sender {
-    [self.delegate popupDatePicker:self didSelectDate:self.datePicker.date];
+    [self.delegate popupDatePickerDidSelectDate:self.datePicker.date];
     [popupDatePicker dismiss];
 }
 
 #pragma mark - Static methods
 
 //在keyWindow里面添加popupDatePicker
-+ (void)showPopupDatePickWithDelegate:(id<PopupDatePickerDelegate>)delegate {
++ (void)showPopupDatePickerWithDelegate:(id<PopupDatePickerDelegate>)delegate {
     UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
     if (popupDatePicker==nil) {
         popupDatePicker = [PopupDatePicker getViewFromNib];

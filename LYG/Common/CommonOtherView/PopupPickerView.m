@@ -64,12 +64,16 @@ static PopupPickerView *popupPickerView = nil;
     
 }
 
++ (void)dismissPopupPickerView {
+    if (popupPickerView) [popupPickerView dismiss];
+}
+
 //从keyWindow中移除PopupPickerView
 - (void)dismiss {
     
 #ifdef PopupPickerViewAnimationOn
-    if ([self.delegate respondsToSelector:@selector(popupPickerViewWillDismiss:)]) {
-        [self.delegate popupPickerViewWillDismiss:self];
+    if ([self.delegate respondsToSelector:@selector(popupPickerViewWillDismiss)]) {
+        [self.delegate popupPickerViewWillDismiss];
     }
     [UIView animateWithDuration:DismissPopupPickerViewTimeInterval animations:^{
         CGRect accessoryViewFrame = self.accessoryView.frame;
@@ -77,16 +81,16 @@ static PopupPickerView *popupPickerView = nil;
         self.accessoryView.frame = CGRectMake(accessoryViewFrame.origin.x, SCREEN_HEIGHT, accessoryViewFrame.size.width, accessoryViewFrame.size.height);
         self.pickerView.frame = CGRectMake(pickerViewFrame.origin.x, SCREEN_HEIGHT+accessoryViewFrame.size.height, pickerViewFrame.size.width, pickerViewFrame.size.height);
     } completion:^(BOOL finished) {
-        if ([self.delegate respondsToSelector:@selector(popupPickerViewDidDismiss:)]) {
-            [self.delegate popupPickerViewDidDismiss:self];
+        if ([self.delegate respondsToSelector:@selector(popupPickerViewDidDismiss)]) {
+            [self.delegate popupPickerViewDidDismiss];
         }
         [self removeFromSuperview];
         popupPickerView = nil;
     }];
     
 #else
-    if ([self.delegate respondsToSelector:@selector(popupPickerViewDidDismiss:)]) {
-        [self.delegate popupPickerViewDidDismiss:self];
+    if ([self.delegate respondsToSelector:@selector(popupPickerViewDidDismiss)]) {
+        [self.delegate popupPickerViewDidDismiss];
     }
     [self removeFromSuperview];
     popupPickerView = nil;
@@ -108,7 +112,7 @@ static PopupPickerView *popupPickerView = nil;
         [selectedTitles addObject:self.pickerViewDataSource[i][selectedRow] ];
     }
     
-    [self.delegate popupPickerView:self didSelectItemTitles:[selectedTitles copy]];
+    [self.delegate popupPickerViewDidSelectItemTitles:[selectedTitles copy]];
     [popupPickerView dismiss];
 }
 

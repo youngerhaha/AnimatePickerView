@@ -16,14 +16,14 @@
 @protocol PopupPickerViewDelegate <NSObject>
 
 @required
-- (void)popupPickerView:(PopupPickerView *)popupPickerView didSelectItemTitles:(NSArray *)itemTitles;
+- (void)popupPickerViewDidSelectItemTitles:(NSArray *)itemTitles;
 
 @optional
 //popupPickerView即将消失
-- (void)popupPickerViewWillDismiss:(PopupPickerView *)popupPickerView;
+- (void)popupPickerViewWillDismiss;
 
 //popupPickerView已经消失
-- (void)popupPickerViewDidDismiss:(PopupPickerView *)popupPickerView;
+- (void)popupPickerViewDidDismiss;
 
 @end
 
@@ -34,6 +34,6 @@
 + (void)showPopupPickerViewWithDelegate:(id<PopupPickerViewDelegate>)delegate andDataSourceArray:(NSArray *)dataSourceArray;
 
 //从keyWindow中移除PopupPickerView
-- (void)dismiss;
++ (void)dismissPopupPickerView;
 
 @end
