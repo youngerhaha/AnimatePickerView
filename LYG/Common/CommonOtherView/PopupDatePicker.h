@@ -17,14 +17,14 @@
 
 @required
 //popupDatePicker已经选择日期
-- (void)popupDatePicker:(PopupDatePicker *)popupDatePicker didSelectDate:(NSDate *)date;
+- (void)popupDatePickerDidSelectDate:(NSDate *)date;
 
 @optional
 //popupDatePicker即将消失
-- (void)popupDatePickerWillDismiss:(PopupDatePicker *)popupDatePicker;
+- (void)popupDatePickerWillDismiss;
 
 //popupDatePicker已经消失
-- (void)popupDatePickerDidDismiss:(PopupDatePicker *)popupDatePicker;
+- (void)popupDatePickerDidDismiss;
 
 @end
 
@@ -32,9 +32,9 @@
 @interface PopupDatePicker : BaseView
 
 //采用默认的动画效果
-+ (void)showPopupDatePickWithDelegate:(id<PopupDatePickerDelegate>)delegate;
++ (void)showPopupDatePickerWithDelegate:(id<PopupDatePickerDelegate>)delegate;
 
 //从keyWindow中移除PopupDatePick
-- (void)dismiss;
++ (void)dismissPopupDatePicker;
 
 @end

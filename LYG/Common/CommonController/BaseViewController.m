@@ -41,7 +41,7 @@
 #pragma mark - IBAction
 
 - (IBAction)showPopupDatePicker:(id)sender {
-    [PopupDatePicker showPopupDatePickWithDelegate:self];
+    [PopupDatePicker showPopupDatePickerWithDelegate:self];
 }
 
 - (IBAction)showPopupPickerView:(id)sender {
@@ -51,15 +51,30 @@
 #pragma mark - PopupDatePickerDelegate
 
 //popupDatePicker已经选择日期
-- (void)popupDatePicker:(PopupDatePicker *)popupDatePicker didSelectDate:(NSDate *)date {
+- (void)popupDatePickerDidSelectDate:(NSDate *)date {
     NSLog(@"%@",date);
 }
 
+- (void)popupDatePickerWillDismiss {
+    NSLog(@"popupDatePickerWillDismiss");
+}
+
+- (void)popupDatePickerDidDismiss {
+    NSLog(@"popupDatePickerDidDismiss");
+}
 
 #pragma mark - PopupPickerViewDelegate
 
-- (void)popupPickerView:(PopupPickerView *)popupPickerView didSelectItemTitles:(NSArray *)itemTitles {
+- (void)popupPickerViewDidSelectItemTitles:(NSArray *)itemTitles {
     NSLog(@"itemTitles:%@",itemTitles);
+}
+
+- (void)popupPickerViewWillDismiss {
+    NSLog(@"popupPickerViewWillDismiss");
+}
+
+- (void)popupPickerViewDidDismiss {
+    NSLog(@"popupPickerViewDidDismiss");
 }
 
 #pragma mark - Basic Functions
