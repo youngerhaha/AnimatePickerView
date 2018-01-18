@@ -1,5 +1,5 @@
 # AnimatePickerView 动画PickerView
-AnimatePickerView是iOS的动画效果弹出日期选择视图、数据选择视图，带蒙板效果，通过代理方法回调选中的结果
+AnimatePickerView采用iOS的动画效果来弹出日期选择视图、数据选择视图，带蒙板效果，通过代理方法回调用户选中的结果。
 
 使用说明：
 1，下载后参考页面中的调用方法使用；
